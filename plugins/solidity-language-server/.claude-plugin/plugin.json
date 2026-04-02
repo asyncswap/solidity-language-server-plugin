@@ -22,5 +22,13 @@
     "diagnostics",
     "code-intelligence"
   ],
-  "lspServers": "./.lsp.json"
+  "lspServers": {
+    "solidity": {
+      "command": "solidity-language-server",
+      "args": ["--stdio"],
+      "extensionToLanguage": {
+        ".sol": "solidity"
+      }
+    }
+  }
 }
