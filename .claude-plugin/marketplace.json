@@ -12,9 +12,9 @@
       "description": "Solidity language server for real-time code intelligence, diagnostics, and navigation",
       "version": "1.0.0",
       "author": {
-        "name": "Asyncswap Labs",
+        "name": "mmsaki",
         "email": "lsp@asyncswap.org",
-        "url": "https://github.com/asyncswap"
+        "url": "https://github.com/asyncswap/solidity-language-server"
       },
       "homepage": "https://solidity-language-server-docs.pages.dev/",
       "repository": "https://github.com/asyncswap/solidity-language-server",
