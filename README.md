@@ -8,7 +8,7 @@ Claude Code plugins and skills by [asyncswap](https://github.com/asyncswap).
 /plugin marketplace add asyncswap/skills
 ```
 
-## Plugins / Skills
+## Skills
 
 ### Solidity LSP
 
@@ -17,8 +17,6 @@ Language server support for Solidity via [solidity-language-server](https://gith
 ```
 /plugin install solidity-language-server@asyncswap
 ```
-
-See [plugins/solidity-language-server](plugins/solidity-language-server) for prerequisites and features.
 
 ## License
 
