@@ -1,6 +1,6 @@
 # solidity-language-server
 
-A Claude Code plugin that provides Solidity language server support via [solidity-language-server](https://github.com/mmsaki/solidity-language-server).
+A Claude Code plugin that provides Solidity language server support via [solidity-language-server](https://github.com/asyncswap/solidity-language-server).
 
 ## Prerequisites
 
@@ -15,13 +15,13 @@ cargo install solidity-language-server
 1. Add the marketplace:
 
 ```
-/plugin marketplace add mmsaki/solidity-language-server-plugin
+/plugin marketplace add asyncswap/solidity-language-server-plugin
 ```
 
 2. Install the plugin:
 
 ```
-/plugin install solidity-language-server@mmsaki
+/plugin install solidity-language-server@asyncswap
 ```
 
 ## Features

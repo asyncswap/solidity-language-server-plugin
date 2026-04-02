@@ -1,8 +1,8 @@
 {
-  "name": "mmsaki",
+  "name": "asyncswap",
   "description": "Solidity development tools for Claude Code",
   "owner": {
-    "name": "mmsaki",
+    "name": "asyncswap",
     "email": "lsp@asyncswap.org"
   },
   "plugins": [
@@ -11,7 +11,7 @@
       "description": "Solidity language server for code intelligence and analysis",
       "version": "1.0.0",
       "author": {
-        "name": "mmsaki",
+        "name": "asyncswap",
         "email": "lsp@asyncswap.org"
       },
       "source": "./plugins/solidity-language-server",
