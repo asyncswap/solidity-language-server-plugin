@@ -1,0 +1,24 @@
+{
+  "plugins": [
+    {
+      "name": "solidity-language-server",
+      "description": "Solidity language server for code intelligence and analysis",
+      "version": "1.0.0",
+      "author": {
+        "name": "mmsaki"
+      },
+      "source": ".",
+      "category": "development",
+      "strict": false,
+      "lspServers": {
+        "solidity": {
+          "command": "solidity-language-server",
+          "args": ["--stdio"],
+          "extensionToLanguage": {
+            ".sol": "solidity"
+          }
+        }
+      }
+    }
+  ]
+}
