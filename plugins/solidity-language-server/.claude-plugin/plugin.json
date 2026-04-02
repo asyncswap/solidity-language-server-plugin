@@ -1,0 +1,26 @@
+{
+  "name": "solidity-language-server",
+  "version": "1.0.0",
+  "description": "Solidity language server for real-time code intelligence, diagnostics, and navigation in Claude Code",
+  "author": {
+    "name": "Asyncswap Labs",
+    "email": "lsp@asyncswap.org",
+    "url": "https://github.com/asyncswap"
+  },
+  "homepage": "https://solidity-language-server-docs.pages.dev/",
+  "repository": "https://github.com/asyncswap/solidity-language-server",
+  "license": "MIT",
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "evm",
+    "smart-contracts",
+    "lsp",
+    "language-server",
+    "foundry",
+    "forge",
+    "diagnostics",
+    "code-intelligence"
+  ],
+  "lspServers": "./.lsp.json"
+}

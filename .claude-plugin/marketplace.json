@@ -2,30 +2,38 @@
   "name": "asyncswap",
   "description": "Solidity development tools for Claude Code",
   "owner": {
-    "name": "asyncswap",
-    "email": "lsp@asyncswap.org"
+    "name": "Asyncswap Labs",
+    "email": "lsp@asyncswap.org",
+    "url": "https://github.com/asyncswap"
   },
   "plugins": [
     {
       "name": "solidity-language-server",
-      "description": "Solidity language server for code intelligence and analysis",
+      "description": "Solidity language server for real-time code intelligence, diagnostics, and navigation",
       "version": "1.0.0",
       "author": {
-        "name": "asyncswap",
-        "email": "lsp@asyncswap.org"
+        "name": "Asyncswap Labs",
+        "email": "lsp@asyncswap.org",
+        "url": "https://github.com/asyncswap"
       },
+      "homepage": "https://asyncswap.org/lsp",
+      "repository": "https://github.com/asyncswap/solidity-language-server",
+      "license": "MIT",
+      "keywords": [
+        "solidity",
+        "ethereum",
+        "evm",
+        "smart-contracts",
+        "lsp",
+        "language-server",
+        "foundry",
+        "forge",
+        "diagnostics",
+        "code-intelligence"
+      ],
       "source": "./plugins/solidity-language-server",
       "category": "development",
-      "strict": false,
-      "lspServers": {
-        "solidity": {
-          "command": "solidity-language-server",
-          "args": ["--stdio"],
-          "extensionToLanguage": {
-            ".sol": "solidity"
-          }
-        }
-      }
+      "strict": false
     }
   ]
 }
