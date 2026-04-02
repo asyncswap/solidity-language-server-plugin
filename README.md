@@ -15,7 +15,7 @@ curl -fsSL https://asyncswap.org/lsp/install.sh | sh
 1. Add the marketplace:
 
 ```
-/plugin marketplace add asyncswap/solidity-language-server-plugin
+/plugin marketplace add asyncswap/skills
 ```
 
 2. Install the plugin:
