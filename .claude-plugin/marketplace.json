@@ -16,7 +16,7 @@
         "email": "lsp@asyncswap.org",
         "url": "https://github.com/asyncswap"
       },
-      "homepage": "https://asyncswap.org/lsp",
+      "homepage": "https://solidity-language-server-docs.pages.dev/",
       "repository": "https://github.com/asyncswap/solidity-language-server",
       "license": "MIT",
       "keywords": [
