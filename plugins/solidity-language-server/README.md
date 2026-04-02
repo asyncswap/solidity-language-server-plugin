@@ -12,11 +12,17 @@ cargo install solidity-language-server
 
 ## Installation
 
-```bash
-/plugin install solidity-language-server@mmsaki
+1. Add the marketplace:
+
+```
+/plugin marketplace add mmsaki/solidity-language-server-plugin
 ```
 
-Or browse for the plugin in `/plugin > Discover`.
+2. Install the plugin:
+
+```
+/plugin install solidity-language-server@mmsaki
+```
 
 ## Features
 
