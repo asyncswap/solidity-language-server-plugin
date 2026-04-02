@@ -14,7 +14,7 @@
         "name": "mmsaki",
         "email": "lsp@asyncswap.org"
       },
-      "source": "./",
+      "source": "./plugins/solidity-language-server",
       "category": "development",
       "strict": false,
       "lspServers": {
