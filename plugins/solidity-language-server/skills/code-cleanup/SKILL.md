@@ -112,51 +112,111 @@ After applying any edit:
 2. Check that the fixed diagnostic no longer appears in the new `<new-diagnostics>` block
 3. If new errors appear (e.g., compilation error from a bad rename), report and revert
 
-## Output
+## Output: Preview-Then-Apply Workflow
 
-### Cleanup Report
+**Never apply fixes silently.** Always show the diff first, then apply only after presenting it.
+
+### Step 1: Show the cleanup summary
 
 ```
 ## Code Cleanup — <file or directory>
 
-| Category | Issues | Fixable | Fixed |
+| Category | Issues | Fixable | Description |
 |---|---|---|---|
-| naming | 2 | 2 | 2 |
-| gas | 5 | 0 | — |
-| safety | 2 | 0 | — |
-| style | 1 | 1 | 1 |
+| naming | 2 | 2 | `router` → `ROUTER`, ... |
+| gas | 5 | 0 | keccak256 inline assembly |
+| safety | 2 | 0 | unchecked ERC-20 transfer |
+| style | 1 | 1 | unwrapped modifier logic |
 | dead-code | 0 | — | — |
-| **Total** | **10** | **3** | **3** |
 ```
 
-For each fix applied, show the diff:
+### Step 2: Present each fix as a diff BEFORE applying
+
+For each fixable issue, read the file, construct the old and new strings, and present the change as a diff block in your text output:
 
 ```diff
+ // File: AsyncSwap.sol:40
 - AsyncRouter public immutable router;
 + AsyncRouter public immutable ROUTER;
 ```
 
-Updated N references in M files:
-- `File.sol:line` — `old` → `new`
-- ...
-
-For each suggestion (not applied):
-
-```
-asm-keccak256 — AsyncSwap.sol:537 (×5 instances)
-Inline assembly saves ~30 gas per call but reduces readability.
+```diff
+ // File: AsyncSwap.sol:292
+- router.executeSwap{value: msg.value}(
++ ROUTER.executeSwap{value: msg.value}(
 ```
 
-For each safety issue (needs decision):
+```diff
+ // File: AsyncSwap.sol:189
+- router.withdrawNative(to, amount);
++ ROUTER.withdrawNative(to, amount);
+```
+
+For renames, list ALL reference sites from `LSP findReferences` so the user sees the full blast radius before any edits happen.
+
+### Step 3: Apply with Edit tool
+
+After presenting the diffs, apply each change using the `Edit` tool. The Edit tool shows its own diff to the user for approval. Apply changes one file at a time, starting from the bottom of each file (highest line number first) to avoid offset drift.
+
+For cross-file renames:
+1. Present ALL diffs across all files in one text block
+2. Apply edits file by file — definition site first, then usage sites
+3. After all edits, Read the files to trigger fresh LSP diagnostics
+4. Confirm the diagnostic is resolved (no longer appears)
+
+### Step 4: Present non-fixable issues as choices
+
+For safety issues, present options with diffs for each:
 
 ```
 erc20-unchecked-transfer — CurrencySettler.sol:18
-Current: `IERC20(token).transferFrom(payer, address(manager), amount);`
-Options:
-  A. `if (!IERC20(token).transferFrom(...)) revert()`
-  B. `IERC20(token).safeTransferFrom(...)` (add SafeERC20 import)
-  C. Keep as-is (codebase uses low-level .call() pattern elsewhere)
+
+Current:
+  IERC20(token).transferFrom(payer, address(manager), amount);
+
+Option A:
+```diff
+- IERC20(token).transferFrom(payer, address(manager), amount);
++ if (!IERC20(token).transferFrom(payer, address(manager), amount)) revert();
 ```
+
+Option B:
+```diff
++ import {SafeERC20} from "openzeppelin/token/ERC20/utils/SafeERC20.sol";
+  ...
+- IERC20(token).transferFrom(payer, address(manager), amount);
++ SafeERC20.safeTransferFrom(IERC20(token), payer, address(manager), amount);
+```
+
+Option C: Keep as-is (codebase uses low-level .call() pattern elsewhere)
+```
+
+For gas suggestions, show the before/after but mark as optional:
+
+```
+asm-keccak256 — AsyncSwap.sol:537 (×5 instances)
+
+```diff
+- bytes32 orderId = keccak256(abi.encode(order));
++ bytes32 orderId;
++ assembly {
++     let ptr := mload(0x40)
++     mstore(ptr, mload(order))
++     mstore(add(ptr, 0x20), mload(add(order, 0x20)))
++     mstore(add(ptr, 0x40), mload(add(order, 0x40)))
++     orderId := keccak256(ptr, 0x60)
++ }
+```
+
+Saves ~30 gas per call. Reduces readability. Apply only if gas is a priority.
+```
+
+### Step 5: Verify
+
+After all edits, Read each modified file. Check:
+- The fixed diagnostic no longer appears in `<new-diagnostics>`
+- No new error diagnostics were introduced
+- If a new error appears, show it and offer to revert
 
 ## Reactive Mode
 
@@ -166,5 +226,6 @@ This skill works best reactively during development:
 2. LSP publishes diagnostics in `<new-diagnostics>`
 3. User says "fix those warnings" or "clean up"
 4. Skill reads the diagnostics from conversation context
-5. Applies safe fixes immediately, presents choices for unsafe ones
-6. Reads files after to verify diagnostics are resolved
+5. Presents diffs for each fix
+6. Applies via Edit tool (user sees each change for approval)
+7. Reads files after to verify diagnostics are resolved
