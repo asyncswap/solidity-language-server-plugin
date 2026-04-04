@@ -52,7 +52,7 @@ Launch **three agents in parallel** using the Agent tool. Each agent runs the co
 prompt: |
   Run the call-analysis skill on <file-path>.
   Analyze all external and public functions.
-  Use LSP outgoingCalls with depth 3, direction both.
+  Use LSP outgoingCalls with depth 3, direction outgoing. Then use LSP incomingCalls with depth 1 for callback entry points.
   Grep for low-level calls (.call, .staticcall, .delegatecall, abi.encodeWithSelector).
   Grep for callback patterns (receive, fallback, unlockCallback, on*Callback).
 
@@ -169,7 +169,7 @@ Any FINDING or LEAD from Agents 1 or 2 that was NOT covered by a POC test goes t
 
 ### Step 4: Deduplicate
 
-Group by `group_key` (`Contract | function | bug-class`). If multiple agents flagged the same issue AND the POC covers it, merge into one finding with the POC as the authoritative proof. Annotate `[agents: N]`.
+Group by `group_key` (`Contract | function | bug-class`). If multiple agents flagged the same issue AND the POC covers it, merge into one finding with the POC as the authoritative proof. Annotate with explicit agent names, e.g. `[agents: call-analysis, entrypoint-analysis]`. Never use "both" — always list agent names.
 
 ### Step 5: Compute confidence
 

@@ -15,7 +15,7 @@ Perform a comprehensive call graph analysis for Solidity functions using LSP cal
   - **file-path** (required): Path to the Solidity file to analyze
   - **function-name** (optional): Specific function to analyze. If omitted, analyze all `external` and `public` functions in the file.
   - **--depth N** (optional): Maximum recursion depth, 1-7. Default: 3.
-  - **--direction** (optional): `both` (default), `incoming`, or `outgoing`.
+  - **--direction** (optional): `incoming`, `outgoing`, or `incoming,outgoing` (default: `incoming,outgoing`).
 
 ## Phase 1: LSP Call Hierarchy (Structured Calls)
 
@@ -43,7 +43,7 @@ function traceOutgoing(filePath, line, character, currentDepth, maxDepth, visite
         traceOutgoing(call.filePath, call.line, call.character, currentDepth + 1, maxDepth, visited)
 ```
 
-Apply the same pattern for `incomingCalls` when direction is `incoming` or `both`.
+Apply the same pattern for `incomingCalls` when direction includes `incoming`.
 
 **Important rules:**
 - Track visited nodes by `filePath:line` to prevent infinite loops on circular/recursive calls.
