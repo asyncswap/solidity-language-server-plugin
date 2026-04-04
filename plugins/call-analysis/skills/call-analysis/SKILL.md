@@ -72,7 +72,7 @@ Search the target file and all files discovered in Phase 1 that are in `src/`:
 ```
 Patterns to grep (in .sol files under src/):
   \.call\{                    — low-level call with value
-  \.call\(                    ��� low-level call
+  \.call\(                    — low-level call
   \.staticcall\(              — static call
   \.delegatecall\(            — delegate call
   abi\.encodeWithSelector\(   — often paired with .call()

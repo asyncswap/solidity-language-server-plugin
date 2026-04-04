@@ -1,0 +1,22 @@
+{
+  "name": "call-analysis",
+  "description": "Recursive call graph analysis for Solidity contracts using LSP call hierarchy and grep for low-level calls",
+  "version": "1.0.0",
+  "author": {
+    "name": "Asyncswap Labs",
+    "email": "lsp@asyncswap.org",
+    "url": "https://github.com/asyncswap"
+  },
+  "homepage": "https://github.com/asyncswap/skills",
+  "repository": "https://github.com/asyncswap/skills",
+  "license": "MIT",
+  "keywords": [
+    "solidity",
+    "call-graph",
+    "lsp",
+    "security",
+    "audit",
+    "reentrancy",
+    "static-analysis"
+  ]
+}
