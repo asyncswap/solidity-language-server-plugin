@@ -267,3 +267,25 @@ For each HIGH or CRITICAL finding, add a detailed section:
 - Every finding must have a proof sketch — either an attack scenario or an argument for why it is safe.
 - Do not include findings that are purely informational noise. INFO-level findings should teach the reader something non-obvious about the contract's design.
 - If the contract uses a content-addressed or commit-reveal pattern that makes input forgery revert, explicitly call this out as a design pattern in the Executive Summary.
+
+## Structured Output (when called by orchestrator)
+
+When this skill is invoked as an agent by the `security-review` orchestrator, **also** append structured FINDING and LEAD blocks after the normal output. These blocks enable deduplication across agents.
+
+For each UNCHECKED or PARTIAL taint flow with HIGH/CRITICAL severity:
+
+```
+FINDING | contract: Name | function: func | line: N | bug_class: kebab-tag | group_key: Contract | function | bug-class
+path: parameter → transformation → sink (state write or external call)
+proof: concrete parameter values that reach the sink, with validation gaps identified
+description: one sentence
+fix: one-sentence suggestion
+```
+
+For each BOUNDED taint flow or MEDIUM/LOW severity:
+
+```
+LEAD | contract: Name | function: func | line: N | bug_class: kebab-tag | group_key: Contract | function | bug-class
+code_smells: what you found (e.g., unchecked tick, zero minAmountOut allowed)
+description: one sentence explaining the risk and what defense exists
+```

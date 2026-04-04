@@ -170,3 +170,25 @@ Present the full analysis in this order:
 4. **External Call Surface** — summary table (Phase 3, Step 8)
 5. **Truncated Branches** — depth limit warnings (Phase 3, Step 9)
 6. **Callback Entry Points** — functions that external contracts can call back into (Phase 2, Step 5)
+
+## Structured Output (when called by orchestrator)
+
+When this skill is invoked as an agent by the `security-review` orchestrator, **also** append structured FINDING and LEAD blocks after the normal output. These blocks enable deduplication across agents.
+
+For each HIGH or CRITICAL risk in the External Call Surface table:
+
+```
+FINDING | contract: Name | function: func | line: N | bug_class: kebab-tag | group_key: Contract | function | bug-class
+path: caller → function → state change → external call → impact
+proof: concrete call chain with node classifications
+description: one sentence
+fix: one-sentence suggestion
+```
+
+For each MEDIUM or LOW risk:
+
+```
+LEAD | contract: Name | function: func | line: N | bug_class: kebab-tag | group_key: Contract | function | bug-class
+code_smells: what you found (e.g., unresolved-token call, missing reentrancy guard)
+description: one sentence explaining the risk and what remains unverified
+```
